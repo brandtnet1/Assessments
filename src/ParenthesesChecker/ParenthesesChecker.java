@@ -22,7 +22,7 @@ public class ParenthesesChecker {
 			var scan = new Scanner(System.in);
 			
 			System.out.print("Enter LISP code to have parentheses checked: ");
-			code = scan.next();			
+			code = scan.nextLine();
 			scan.close();
 		}
 		
