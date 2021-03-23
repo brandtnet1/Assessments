@@ -31,7 +31,7 @@ public class CSVSeparator {
 					} else {
 						map.put(user.userId(), user);
 					}
-				}:
+				}
 				
 				csvReader.close();
 				

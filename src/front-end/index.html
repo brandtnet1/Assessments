@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vue Registration</title>
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+        $main: #1ab188;
+
+        *, *:before, *:after {
+          box-sizing: border-box;
+        }
+
+        html {
+            overflow-y: scroll;
+        }
+
+        body {
+          background: #c1bdba;
+          font-family: 'Titillium Web', sans-serif;
+        }
+
+        .form {
+          background:rgba(#13232f,.9);
+          padding: 40px;
+          max-width:600px;
+          margin:40px auto;
+          border-radius:4px;
+          box-shadow:0 4px 10px 4px rgba(#13232f, .3);
+        }
+
+        input {
+          font-size:22px;
+          display:block;
+          width:100%;
+          height:100%;
+          padding:5px 10px;
+          background:none;
+          background-image:none;
+          border:2px solid #a0b3b0;
+          color:#ffffff;
+          border-radius:0;
+          transition:border-color .25s ease, box-shadow .25s ease;
+        }
+
+        input:hover {
+            outline:0;
+            border-color:#1ab188;
+         }
+
+        .field-wrap {
+          position:relative;
+          margin-bottom:40px;
+        }
+
+        .top-row {
+          &:after {
+            content: "";
+            display: table;
+            clear: both;
+          }
+
+          > div {
+            float:left;
+            width:48%;
+            margin-right:4%;
+            &:last-child {
+              margin:0;
+            }
+          }
+        }
+
+        .button {
+          border:0;
+          outline:none;
+          border-radius:0;
+          padding:15px 0;
+          font-size:2rem;
+          font-weight:600;
+          text-transform:uppercase;
+          letter-spacing:.1em;
+          background:#1ab188;
+          color:#ffffff;
+          transition:all.5s ease;
+          -webkit-appearance: none;
+
+        }
+
+        .button:hover, .button:focus {
+            background: #17a07b;
+        }
+
+        .button-block {
+          display:block;
+          width:104%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form">
+    <div class="tab-content">
+        <div id="signup">
+            <form
+                    id="app"
+                    @submit="checkForm"
+                    method="post"
+                    novalidate="true">
+
+                <div v-if="errors.length" class="field-wrap">
+                    <b>Please correct the following error(s):</b>
+                    <ul>
+                        <li v-for="error in errors">{{ error }}</li>
+                    </ul>
+                </div>
+
+                <div class="top-row">
+                    <div class="field-wrap">
+                        <input
+                                id="firstName"
+                                v-model="firstName"
+                                type="text"
+                                name="firstName"
+                                placeholder="First Name"
+                        >
+                    </div>
+
+                    <div class="field-wrap">
+                        <input
+                                id="lastName"
+                                v-model="lastName"
+                                type="text"
+                                name="lastName"
+                                placeholder="Last Name">
+                    </div>
+                </div>
+
+                <div class="field-wrap">
+                    <input
+                            id="npiNumber"
+                            v-model="npiNumber"
+                            type="number"
+                            name="npiNumber"
+                            placeholder="NPI Number">
+                </div>
+
+                <div class="field-wrap">
+                    <input
+                            id="businessAddress"
+                            v-model="businessAddress"
+                            type="text"
+                            name="businessAddress"
+                            placeholder="Business Address">
+                </div>
+
+                <div class="field-wrap">
+                    <input
+                            id="phoneNumber"
+                            v-model="phoneNumber"
+                            type="tel"
+                            name="phoneNumber"
+                            placeholder="Phone Number">
+                </div>
+
+                <div class="field-wrap">
+                    <input
+                            id="email"
+                            v-model="email"
+                            type="email"
+                            name="email"
+                            placeholder="Email">
+                </div>
+
+                <button type="submit" class="button button-block"/>Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        errors: [],
+        firstName: null,
+        lastName: null,
+        npiNumber: null,
+        businessAddress: null,
+        phoneNumber: null,
+        email: null
+      },
+      methods: {
+        checkForm: function (e) {
+          this.errors = [];
+
+          if (!this.firstName || !this.lastName) {
+            this.errors.push("Name required.");
+          }
+
+          if (!this.npiNumber) {
+            this.errors.push("NPI Number required.");
+          }
+
+          if (!this.businessAddress) {
+            this.errors.push("Business Address required.");
+          }
+
+          if (!this.phoneNumber) {
+            this.errors.push("Phone number required.");
+          }
+
+          if (!this.email) {
+            this.errors.push('Email required.');
+          } else if (!this.validEmail(this.email)) {
+            this.errors.push('Valid email required.');
+          }
+
+          if (!this.errors.length) {
+            return true;
+          }
+
+          e.preventDefault();
+        },
+        validEmail: function (email) {
+          var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return re.test(email);
+        }
+      }
+    })
+  </script>
+</body>
+</html>
